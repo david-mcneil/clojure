@@ -302,9 +302,11 @@ private static Object matchSymbol(String s){
 			{
 			Symbol ks = Symbol.intern(s.substring(2));
 			Namespace kns;
-			if(ks.ns != null)
+			if(ks.ns != null) {
 				kns = Compiler.namespaceFor(ks);
-			else
+				if(kns == null)
+					throw new IllegalArgumentException("Namespace does not exist: " + ks.ns);
+			} else
 				kns = Compiler.currentNS();
 			//auto-resolving keyword
 			return Keyword.intern(kns.name.name,ks.name);
